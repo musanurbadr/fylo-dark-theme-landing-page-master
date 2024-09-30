@@ -1,19 +1,16 @@
 require "./task.rb"
+
 File.open('./db/914.txt', 'w') do |file|
   # Dosya içine yazılacak içerik
 end
+
 if File.exist?('./db/914.txt')
   File.open('./db/914.txt', 'r') do |file|
     # Dosya işlemleri burada yapılır
   end
 else
   puts "Dosya bulunamadı."
-end
-
-# 
-
-puts "Programm Started ============="
-puts "Please enter operation name"
+end 
 
 def run_programm
   puts "\n"
@@ -36,7 +33,7 @@ def run_programm
 
   commands_list = ['list', 'create', 'update', 'get', 'delete']
 
-  if (commands_list.include?command) 
+  if commands_list.include?command
       case command
           when 'list'
             Task.new.all

@@ -5,19 +5,16 @@ class Task
     files = Dir['./db/*']
     if files.length > 0
       files.each do |file|
-        File.foreach(file) do |line|
-          file_content = line.split(',')
-          id = file_content[0].split(':')[1]&.strip rescue "N/A"
-          title = file_content[1].split(':')[1]&.strip rescue "N/A"
+        file_content = File.read(file).split(',')
+        id = file_content[0].split(':')[1]&.strip rescue "N/A"
+        title = file_content[1].split(':')[1]&.strip rescue "N/A"
 
-          result = <<~List
-            id: #{id},
-            title: #{title}
-            ==============================
-          List
-
-          puts result
-        end
+        result = <<~List
+          id: #{id},
+          title: #{title}
+          ==============================
+        List
+        puts result
       end
     else
       puts "Dosya bulunamadı veya içerik boş."
@@ -31,11 +28,11 @@ class Task
       title = file_content[1].split(':')[1]
       description = file_content[2].split(':')[1]
       result = <<~SingleTask
-        id: #{id},
-        title: #{title}
-        description: #{description}
-        ==============================
-      SingleTask
+              id: #{id},
+              title: #{title}
+              description: #{description}
+              ==============================
+              SingleTask
       puts result
     else
       puts "No task with this id"
@@ -44,7 +41,7 @@ class Task
 
   def save
     id = rand(1..1000)
-    task = "id: #{id},title: #{self.title},description: #{self.description}"
+    task = "id: #{id},title: #{self.title}, description: #{self.description}"
     File.open("./db/#{id}.txt", "w") { |f| f.write(task) }
   end
 
